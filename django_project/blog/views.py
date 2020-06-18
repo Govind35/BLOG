@@ -16,7 +16,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html' # naming covention is appname/model_viewtype.html for ListView but we can change it here
     context_object_name = 'posts'       # to tell listview  which object to be passed which we used in html file 
     ordering = ['-date_posted']
-    paginate_by = 2
+    paginate_by = 4
 
 class UserPostListView(ListView):
     model = Post
