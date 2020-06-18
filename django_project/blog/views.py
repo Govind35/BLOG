@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse # for using Httpresponse
 from django.contrib.auth.mixins import (LoginRequiredMixin,   # class cant use loginRequired decorater so LoginRequiredMixin is used
                                         UserPassesTestMixin ) # user can update his own post
+from django.contrib.auth.models import User 
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post # for getting data from Post database
 
@@ -16,6 +17,18 @@ class PostListView(ListView):
     context_object_name = 'posts'       # to tell listview  which object to be passed which we used in html file 
     ordering = ['-date_posted']
     paginate_by = 2
+
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html' # naming covention is appname/model_viewtype.html for ListView but we can change it here
+    context_object_name = 'posts'       # to tell listview  which object to be passed which we used in html file 
+    ordering = ['-date_posted']
+    paginate_by = 4                # for pagination of page
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
+
 
 class PostDetailView(DetailView):       # naming covention is appname/model_viewtype.html for DetailView
     model = Post
