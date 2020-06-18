@@ -15,4 +15,4 @@ class Post(models.Model):
     def get_absolute_url(self):     # used to show the new post created
         return reverse('post-detail', kwargs={'pk': self.pk}) # reverse will take to post-detail url with value of pk
 
-    
+      
