@@ -6,7 +6,7 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)       #
+        form = UserRegisterForm(request.POST)       
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')        #to get data of username
